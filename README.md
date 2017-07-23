@@ -7,4 +7,5 @@ OpenJTalkを利用し、指定した文字列をしゃべるコマンドおよ�
 ## Usage(command line)
 
 `$ speak.py [str]`
+
 指定した文字列(str)をしゃべります。strが無い場合は、時刻をしゃべります。
