@@ -14,6 +14,8 @@ $ speak.py [str]`
 ## Usage (python3 library)
 
 ```python
+#!/usr/bin/env python3
+
 import speak
 
 speak(str)
