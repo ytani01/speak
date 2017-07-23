@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: speek.sh,v 1.2 2017/05/23 09:31:49 ytani Exp ytani $
+# $Id: speak.sh,v 1.1 2017/07/23 16:16:16 ytani Exp ytani $
 #
 
 TMPDIR=/tmp
