@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# $Id: speak.py,v 1.2 2017/07/23 16:31:41 ytani Exp ytani $
 # -*- coding:utf-8 -*-
 
 import subprocess
