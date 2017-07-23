@@ -16,7 +16,13 @@ $ speak.py [str]`
 ```python
 #!/usr/bin/env python3
 
+# import this class library
 import speak
 
+# Example 1
+speak.speak('こんにちは')
+
+# Example 2
+str = 'こんにちは'
 speak.speak(str)
 ```
