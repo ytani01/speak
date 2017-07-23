@@ -18,5 +18,5 @@ $ speak.py [str]`
 
 import speak
 
-speak(str)
+speak.speak(str)
 ```
