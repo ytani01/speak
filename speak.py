@@ -10,16 +10,7 @@ open_jtalk_cmd='open_jtalk'
 wav_file='/tmp/open_jtalk.wav'
 dic_dir='/var/lib/mecab/dic/open-jtalk/naist-jdic'
 
-voice_file='/home/ytani/open_jtalk/MMDAgent_Example-1.7/Voice/mei/mei_normal.htsvoice'
-#voice_file='/home/ytani/open_jtalk/Voices/miku/miku-delta.htsvoice'
-#voice_file='/home/ytani/open_jtalk/Voices/なないろニジ_1.0/なないろニジ.htsvoice'
-#voice_file='/home/ytani/open_jtalk/Voices/遠藤愛_1.0/遠藤愛.htsvoice'
-#voice_file='/home/ytani/open_jtalk/Voices/京歌カオル_1.0/京歌カオル.htsvoice'
-#voice_file='/home/ytani/open_jtalk/Voices/沙音ほむ_1.0/沙音ほむ.htsvoice'
-#voice_file='/home/ytani/open_jtalk/Voices/想音いくる_1.0/想音いくる.htsvoice'
-#voice_file='/home/ytani/open_jtalk/Voices/蒼歌ネロ_1.0/蒼歌ネロ.htsvoice'
-#voice_file='/home/ytani/open_jtalk/Voices/桃音モモ_1.0/桃音モモ.htsvoice'
-#voice_file='/home/ytani/open_jtalk/Voices/遊音一莉_1.0/遊音一莉.htsvoice'
+voice_file='/home/pi/OpenJTalk/MMDAgent_Example-1.7/Voice/mei/mei_normal.htsvoice'
 
 aplay_cmd='aplay'
 

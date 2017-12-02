@@ -7,7 +7,7 @@ TMPDIR=/tmp
 TMPWAV=${TMPDIR}/.voice.wav
 
 STAT_FILE=/proc/asound/card0/pcm0p/sub0/status
-HTS_DIR=/home/ytani/open_jtalk/MMDAgent_Example-1.7/Voice
+HTS_DIR=${HOME}/OpenJTalk/MMDAgent_Example-1.7/Voice
 DICDIR="/var/lib/mecab/dic/open-jtalk/naist-jdic"
 
 

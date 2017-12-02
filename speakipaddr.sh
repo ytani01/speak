@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PATH="/home/ytani/bin:${PATH}"
+PATH="/home/pi/bin:${PATH}"
 
 STR0="IPアドレス 検出"
 STR1="読み上げます"
