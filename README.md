@@ -4,6 +4,12 @@ speak command and library for Python3
 ## Description
 OpenJTalkを利用し、指定した文字列をしゃべるコマンドおよびPython3ライブラリ(クラス)。
 
+## Open JTalkのインストール
+
+```bash
+$ sudo apt -y install open-jtalk open-jtalk-mecab-naist-jdic hts-voice-nitech-jp-atr503-m001
+```
+
 ## Usage (command line)
 
 ```bash
