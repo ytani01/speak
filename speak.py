@@ -10,7 +10,7 @@ open_jtalk_cmd='open_jtalk'
 wav_file='/tmp/open_jtalk.wav'
 dic_dir='/var/lib/mecab/dic/open-jtalk/naist-jdic'
 
-voice_file='/home/pi/OpenJTalk/MMDAgent_Example-1.7/Voice/mei/mei_normal.htsvoice'
+voice_file='/home/pi/speak/Voice/mei/mei_normal.htsvoice'
 
 aplay_cmd='aplay'
 
