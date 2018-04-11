@@ -4,13 +4,15 @@
 
 import subprocess
 import sys
+import os
 from datetime import datetime
 
+homedir = os.environ['HOME']
 open_jtalk_cmd='open_jtalk'
 wav_file='/tmp/open_jtalk.wav'
 dic_dir='/var/lib/mecab/dic/open-jtalk/naist-jdic'
 
-voice_file='/home/pi/speak/Voice/mei/mei_normal.htsvoice'
+voice_file=homedir+'/speak/Voice/mei/mei_normal.htsvoice'
 
 aplay_cmd='aplay'
 
