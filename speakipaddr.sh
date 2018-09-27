@@ -2,33 +2,36 @@
 
 PATH="/home/pi/bin:${PATH}"
 
+GPIO_PIN=17
+
 SPEAK_CMD="speak.py"
 
 MSG0="IPアドレス 検出"
 MSG1="読み上げます"
 MSG2="繰り返します"
 MSG_ERR="IPアドレスを検出できません"
-MSG_INTR="読上げを中断します"
+MSG_INTR="おしゃべりをやめます"
 
 #####
 speak () {
     for s in $*; do
-	s2=`echo $s | sed 's/\([0-9]\)/\1 /g'`
-	${SPEAK_CMD} "$s2"
-	if [ `gpio -g read 17` -eq 0 ]; then
+	if [ `gpio -g read ${GPIO_PIN}` -eq 0 ]; then
 	    echo "!"
 	    ${SPEAK_CMD} ${MSG_INTR}
 	    exit 0
 	fi
+	s2=`echo $s | sed 's/\([0-9]\)/\1 /g'`
+	${SPEAK_CMD} "$s2"
     done
 }
 
 ##### main
+gpio -g mode ${GPIO_PIN} input
 
 IPSTR=`hostname -I | grep '^[0-9]*\.[0-9]' | sed 's/ .*//'`
 echo ${IPSTR}
 if [ "X${IPSTR}" = "X" ]; then
-    speak.sh ${MSG_ERR}
+    ${SPEAK_CMD} ${MSG_ERR}
     exit 1
 fi
 
