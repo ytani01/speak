@@ -25,6 +25,7 @@ if [ "$*" = "" ]; then
     usage
     exit 1
 fi
+
 GPIO_PIN=$*
     
 if [ -e ${BUTTON_FILE} ]; then
@@ -57,12 +58,12 @@ while true; do
 	pin=`echo ${GPIO_PIN} | cut -d ' ' -f $i`
 	val1=`echo ${val0} | cut -d ' ' -f $i`
 	val=`gpio -g read ${pin}`
-	echo -n "${pin}:${val1}:${val}  "
 	if [ ${val1} -ne ${val} ]; then
+	    echo "${pin}:${val1}:${val}  "
 	    echo ${pin} > ${BUTTON_FILE}
 	fi
     done
-    echo
+    #echo
     #sleep 1
 done
 

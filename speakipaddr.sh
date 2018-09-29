@@ -14,12 +14,14 @@ MSG1="読み上げます"
 MSG2="繰り返します"
 MSG_ERR="IPアドレスを検出できません"
 MSG_INTR="おしゃべりをやめます"
+MSG_YES="はい"
 
 #####
 speak () {
     for s in $*; do
 	if [ -e ${STOP_FILE} ]; then
 	    echo "!"
+	    ${SPEAK_CMD} ${MSG_YES}
 	    rm ${STOP_FILE}
 	    ${SPEAK_CMD} ${MSG_INTR}
 	    exit 0
