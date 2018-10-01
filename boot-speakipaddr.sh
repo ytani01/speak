@@ -4,17 +4,22 @@
 
 PATH="/home/pi/bin:${PATH}"
 
-GPIO_PIN=17
+STOP_FILE=${HOME}/BUTTON_INPUT
+GPIO_PIN="13 17"
+WAIT_BUTTON_CMD="wait_button.sh"
 
 SPEAK_CMD="speak.py"
 
+MSG_YES="はい"
 MSG_INTR="おしゃべりをやめます"
 
 #####
 speak () {
     for s in $*; do
-	if [ `gpio -g read ${GPIO_PIN}` -eq 0 ]; then
+	if [ -e ${STOP_FILE} ]; then
 	    echo "!"
+	    ${SPEAK_CMD} ${MSG_YES}
+	    rm ${STOP_FILE}
 	    ${SPEAK_CMD} ${MSG_INTR}
 	    exit 0
 	fi
@@ -24,10 +29,11 @@ speak () {
 }
 
 ##### main
-gpio -g mode 17 input
+${WAIT_BUTTON_CMD} ${STOP_FILE} ${GPIO_PIN} &
 
 speak "こんにちは IPアドレスをチェックします"
-speak "　"
+
+pkill ${WAIT_BUTTON_CMD}
 
 while true; do
     IPSTR=`hostname -I | grep '^[0-9]*\.[0-9]' | sed 's/ .*//'`

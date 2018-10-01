@@ -13,8 +13,8 @@ MSG0="IPアドレス 検出"
 MSG1="読み上げます"
 MSG2="繰り返します"
 MSG_ERR="IPアドレスを検出できません"
-MSG_INTR="おしゃべりをやめます"
 MSG_YES="はい"
+MSG_INTR="おしゃべりをやめます"
 
 #####
 speak () {
@@ -31,6 +31,11 @@ speak () {
     done
 }
 
+exit_ () {
+    pkill ${WAIT_BUTTON_CMD}
+    exit $1
+}
+
 ##### main
 ${WAIT_BUTTON_CMD} ${STOP_FILE} ${GPIO_PIN} &
 
@@ -38,7 +43,7 @@ IPSTR=`hostname -I | grep '^[0-9]*\.[0-9]' | sed 's/ .*//'`
 echo ${IPSTR}
 if [ "X${IPSTR}" = "X" ]; then
     ${SPEAK_CMD} ${MSG_ERR}
-    exit 1
+    exit_ 1
 fi
 
 speak ${MSG0}
@@ -50,10 +55,10 @@ speak ${MSG1}
 speak ${IPSTR2}
 
 if [ X$1 = X ]; then
-    exit 0
+    exit_ 0
 fi
 
 speak ${MSG2}
 speak ${IPSTR2}
 
-exit 0
+exit_ 0
