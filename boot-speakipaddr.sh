@@ -34,6 +34,9 @@ ${WAIT_BUTTON_CMD} ${STOP_FILE} ${GPIO_PIN} &
 speak "こんにちは IPアドレスをチェックします"
 
 pkill ${WAIT_BUTTON_CMD}
+if [ -f ${STOP_FILE} ]; then
+    rm -f ${STOP_FILE}
+fi
 
 while true; do
     IPSTR=`hostname -I | grep '^[0-9]*\.[0-9]' | sed 's/ .*//'`

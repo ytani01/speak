@@ -33,6 +33,7 @@ speak () {
 
 exit_ () {
     pkill ${WAIT_BUTTON_CMD}
+    rm ${STOP_FILE}
     exit $1
 }
 
