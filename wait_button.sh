@@ -59,7 +59,7 @@ while true; do
 	val1=`echo ${val0} | cut -d ' ' -f $i`
 	val=`gpio -g read ${pin}`
 	if [ ${val1} -ne ${val} ]; then
-	    echo "${pin}:${val1}:${val}  "
+	    echo "pin ${pin}: ${val1}->${val}  "
 	    echo ${pin} > ${BUTTON_FILE}
 	fi
     done
