@@ -1,10 +1,11 @@
 #!/bin/sh
 # (c) 2018 Yoichi Tanibayashi
 
-PATH="/home/pi/bin:${PATH}"
+PATH="/home/pi/bin:${PATH}:."
 
 STOP_FILE=${HOME}/BUTTON_INPUT
-GPIO_PIN="13 17"
+#GPIO_PIN="13 17"
+GPIO_PIN="21"
 WAIT_BUTTON_CMD="wait_button.sh"
 
 SPEAK_CMD="speak.py"
@@ -22,7 +23,7 @@ speak () {
 	if [ -e ${STOP_FILE} ]; then
 	    echo "!"
 	    ${SPEAK_CMD} ${MSG_YES}
-	    rm ${STOP_FILE}
+	    rm -f ${STOP_FILE}
 	    ${SPEAK_CMD} ${MSG_INTR}
 	    exit 0
 	fi
@@ -33,7 +34,7 @@ speak () {
 
 exit_ () {
     pkill ${WAIT_BUTTON_CMD}
-    rm ${STOP_FILE}
+    rm -f ${STOP_FILE}
     exit $1
 }
 
