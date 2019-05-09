@@ -8,7 +8,8 @@ STOP_FILE=${HOME}/BUTTON_INPUT
 GPIO_PIN="21"
 WAIT_BUTTON_CMD="wait_button.sh"
 
-SPEAK_CMD="speak.py"
+#SPEAK_CMD="speak.py"
+SPEAK_CMD="Speak.py"
 
 MSG0="IPアドレス 検出"
 MSG1="読み上げます"
@@ -50,7 +51,7 @@ fi
 
 speak ${MSG0}
 
-IPSTR2=`echo ${IPSTR} | sed 's/\./ てん /g'`
+IPSTR2=`echo ${IPSTR} | sed 's/\./てん /g'`
 echo ${IPSTR2}
 
 speak ${MSG1}
