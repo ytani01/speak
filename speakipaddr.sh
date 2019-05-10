@@ -11,7 +11,7 @@ WAIT_BUTTON_CMD="wait_button.sh"
 #SPEAK_CMD="speak.py"
 SPEAK_CMD="Speak.py"
 
-MSG0="IPアドレス 検出"
+MSG0="IPアドレス 検出しました"
 MSG1="読み上げます"
 MSG2="繰り返します"
 MSG_ERR="IPアドレスを検出できません"
