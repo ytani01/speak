@@ -38,6 +38,7 @@ speak () {
 	echo $s2
 	${SPEAK_CMD} "$s2"
 	#(sleep 1; echo $s2; sleep 3) | ${SPEAK_TELNET}
+	sleep 1
     done
 }
 
