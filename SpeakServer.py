@@ -3,6 +3,8 @@
 # (c) 2019 Yoichi Tanibayashi
 #
 from Speak import Speak
+import threading
+import queue
 import socketserver
 import os
 import time
@@ -29,6 +31,55 @@ def get_logger(name, debug):
 
 #####
 DEF_PORT = 12349
+
+#####
+class SpeakWorker(threading.Thread):
+    def __init__(self, debug=False):
+        self.debug = debug
+        self.logger = get_logger(__class__.__name__, self.debug)
+        self.logger.debug('')
+
+        self.msgq = queue.Queue()
+        self.speak = Speak()
+        self.running = False
+
+        super().__init__(daemon=True)
+
+    def send_msg(self, msg=''):
+        self.logger.debug('msg=\'%s\'', msg)
+
+        self.msgq.put(msg)
+
+    def recv_msg(self):
+        self.logger.debug('')
+        msg = self.msgq.get()
+        self.logger.debug('msg=\'%s\'', msg)
+        return msg
+
+    def __del__(self):
+        self.logger.debug('')
+        self.end()
+
+    def end(self):
+        self.logger.debug('')
+        self.running = False
+        while not self.msgq.empty():
+            self.recv_msg()
+        self.send_msg('')
+        self.join()
+        
+    def run(self):
+        self.logger.debug('')
+
+        self.running = True
+        while self.running:
+            msg = self.recv_msg()
+            self.logger.debug('msg=\'%s\'', msg)
+            if msg == '':
+                continue
+            word = msg.split()
+            self.speak.speak(word)
+        self.logger.debug('done')
 
 #####
 class SpeakHandler(socketserver.StreamRequestHandler):
@@ -60,7 +111,7 @@ class SpeakHandler(socketserver.StreamRequestHandler):
         # 0xfd D0
         # 0x22 LINEMODE
         self.net_write(b'\xff\xfd\x22')
-        self.net_write('# Ready\r\n'.encode('utf-8'))
+        self.net_write('#Ready\r\n'.encode('utf-8'))
 
         flag_continue = True
         while flag_continue:
@@ -87,15 +138,19 @@ class SpeakHandler(socketserver.StreamRequestHandler):
                 if ord(ch) >= 0x20:
                     data += ch
             self.logger.debug('data:%a', data)
+            self.net_write(('#' + data + '\r\n#OK\r\n').encode('utf-8'))
             if len(data) == 0:
                 self.logger.debug('No data ..disconect')
                 self.net_write('No data .. disconnect\r\n'.encode('utf-8'))
                 break
 
+            self.server.sw.send_msg(data)
+            '''
             # Speak
             word = data.split()
             self.logger.debug('work=%s', word)
             self.server.speak.speak(word)
+            '''
 
 #####
 class SpeakServer(socketserver.TCPServer):
@@ -104,7 +159,7 @@ class SpeakServer(socketserver.TCPServer):
         self.logger = get_logger(__class__.__name__, debug)
 
         self.port  = port
-        self.speak = Speak()
+        self.sw = SpeakWorker(debug=debug)
 
         try:
             super().__init__(('', self.port), SpeakHandler)
@@ -113,11 +168,13 @@ class SpeakServer(socketserver.TCPServer):
 
     def serve_forever(self):
         self.logger.debug('')
+        self.sw.start()
+        time.sleep(1)
         super().serve_forever()
 
     def end(self):
         self.logger.debug('')
-        self.speak.end()
+        self.sw.end()
 
     def __del__(self):
         self.logger.debug('')

@@ -11,6 +11,7 @@ WAIT_BUTTON_CMD="wait_button.sh"
 #SPEAK_CMD="speak.py"
 #SPEAK_CMD="Speak.py"
 #SPEAK_CMD="SpeakClient.py"
+SPEAK_CMD="speak2.sh"
 
 SPEAK_TELNET="telnet localhost 12349"
 
@@ -34,8 +35,9 @@ speak () {
 	    exit 0
 	fi
 	s2=`echo $s | sed 's/\([0-9]\)/\1 /g'`
-	#${SPEAK_CMD} "$s2"
-	echo $s2 | ${SPEAK_TELNET}
+	echo $s2
+	${SPEAK_CMD} "$s2"
+	#(sleep 1; echo $s2; sleep 3) | ${SPEAK_TELNET}
     done
 }
 
