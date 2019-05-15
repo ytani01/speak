@@ -18,7 +18,11 @@ my_echo () {
 }
 
 MSG=$*
-my_echo "\"${MSG}\""
+my_echo "MSG=\"${MSG}\""
+
+if [ "${MSG}" = "" ];then
+    exit 0
+fi
 
 COUNT=0
 while [ ${COUNT} -lt 10 ]; do
@@ -33,6 +37,7 @@ expect {
 \"#OK\" { send \r}
 }"
     if [ $? -eq 0 ]; then
+	sleep 1
         exit 0
     fi
 
