@@ -52,10 +52,17 @@ class Speak:
         os.makedirs(WAV_DIR, exist_ok=True)
 
     def speak(self, word):
-        self.logger.debug('')
+        self.logger.debug('word=%s', word)
 
-        for w in word:
-            self.speak1(w)
+        if type(word) == str:
+            self.logger.debug('word is string')
+            self.speak1(word)
+        elif type(word) == int:
+            self.logger.debug('word is integer')
+            self.speak1(str(word))
+        else:
+            for w in word:
+                self.speak1(str(w))
 
     def word2wavfile(self, word):
         self.logger.debug('word=%s', word)
@@ -120,7 +127,13 @@ class Sample:
     def main(self):
         self.logger.debug('')
 
-        self.spk.speak(self.word)
+        if self.word != ():
+            self.spk.speak(self.word)
+        else:
+            tm = time.localtime()
+            word = '%s月%s日 %s時%s分' % (tm.tm_mon, tm.tm_mday, tm.tm_hour, tm.tm_min)
+            self.logger.debug('word=%s', word)
+            self.spk.speak(word)
 
     def end(self):
         self.logger.debug('')

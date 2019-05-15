@@ -2,7 +2,12 @@
 speak command and library and server for Python3
 
 ## 1. Description
-OpenJTalkを利用し、指定した文字列をしゃべるコマンドおよびPython3ライブラリ(クラス)、およびサーバー
+OpenJTalkを利用し、指定した文字列をしゃべるコマンド、Python3ライブラリ(クラス)、および、サーバー
+
+文字列をOpenJTalkで、音声ファイル(wav)に変換してから、再生します。
+一度音声ファイルに変換した文字列は、以下のディレトリに保存され蓄積し、次からは変換処理が省略されます。
+
+${HOME}/tmp/Speak_wav/
 
 ## 2. Install
 
@@ -24,9 +29,10 @@ $ sudo apt install -y expect
 ### 3.1 command line
 
 ```bash
-$ speak.py [str]
+$ Speak.py [str]...
 ```
 指定した文字列(str)をしゃべります。strが無い場合は、時刻をしゃべります。
+
 
 ### 3.2 python3 library
 
@@ -34,17 +40,22 @@ $ speak.py [str]
 #!/usr/bin/env python3
 
 # import this class library
-import speak
+from Speak import Speak
+
+# オブジェクトの作成
+s = Speak()
 
 # Example 1
-speak.speak('こんにちは')
+word = 'こんにちは'
+s.speak(word)
 
 # Example 2
-str = 'こんにちは'
-speak.speak(str)
+word_list = ['みなさん', 'こんにちは']
+s.speak(word_list)
 ```
 
-### 3.3 SpeakServer.py
+### 3.3 Speakサーバー「SpeakServer.py」… いろいろと(?)効率がよい
+
 
 ```bash
 $ SpeakServer.py &
