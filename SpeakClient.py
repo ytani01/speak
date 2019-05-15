@@ -32,6 +32,9 @@ def get_logger(name, debug):
 DEF_HOST = 'localhost'
 DEF_PORT = 12349
     
+REPLY_READY = '#Ready'
+REPLY_OK    = '#OK'
+
 #####
 class SpeakClient:
     def __init__(self, svr_host=DEF_HOST, svr_port=DEF_PORT, debug=False):
@@ -50,26 +53,52 @@ class SpeakClient:
 
     def open(self, svr_host=DEF_HOST, svr_port=DEF_PORT):
         self.logger.debug('svr_host=%s, svr_port=%d', svr_host, svr_port)
-        return telnetlib.Telnet(self.svr_host, self.svr_port)
+        
+        tn = telnetlib.Telnet(self.svr_host, self.svr_port)
+        while True:
+            in_data = tn.read_some()
+            self.logger.debug('in_data:%a', in_data)
+            try:
+                decoded_data = in_data.decode('utf-8')
+            except UnicodeDecodeError:
+                decoded_data = ''
+            else:
+                self.logger.debug('decoded_data:\"%s\"', decoded_data)
+
+            if REPLY_READY in decoded_data:
+                break
+
+        return tn
+
         
     def close(self):
         self.logger.debug('')
         self.tn.close()
 
-    def send_msg(self, msg):
+    def speak(self, msg):
         self.logger.debug('msg=%s', msg)
 
-        in_data = self.tn.read_very_eager()
-        if len(in_data) > 0:
-            self.logger.debug('in_data:%a', in_data)
-
+        in_data = self.tn.read_eager()
+        self.logger.debug('in_data:%a', in_data)
+        try:
+            decoded_data = in_data.decode('utf-8')
+        except UnicodeDecodeError:
+            decoded_data = ''
+        else:
+            self.logger.debug('decoded_data:\"%s\"', decoded_data)
+            
         self.tn.write(msg.encode('utf-8'))
 
         time.sleep(0.1)
 
         in_data = self.tn.read_very_eager()
-        if len(in_data) > 0:
-            self.logger.debug('in_data:%a', in_data)
+        self.logger.debug('in_data:%a', in_data)
+        try:
+            decoded_data = in_data.decode('utf-8')
+        except UnicodeDecodeError:
+            decoded_data = ''
+        else:
+            self.logger.debug('decoded_data:\"%s\"', decoded_data)
 
 
 ##### Sample
@@ -86,9 +115,11 @@ class Sample:
 
     def main(self):
         if self.message == '':
-            self.cl.send_msg('こんにちは')
+            tm = time.localtime()
+            message = '%s月%s日 %s時%s分' % (tm.tm_mon, tm.tm_mday, tm.tm_hour, tm.tm_min)
+            self.cl.speak(message)
         else:
-            self.cl.send_msg(self.message)
+            self.cl.speak(self.message)
 
     def end(self):
         self.logger.debug('')

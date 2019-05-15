@@ -5,7 +5,7 @@ speak command and library and server for Python3
 OpenJTalkを利用し、指定した文字列をしゃべるコマンド、Python3ライブラリ(クラス)、および、サーバー
 
 文字列をOpenJTalkで、音声ファイル(wav)に変換してから、再生します。
-一度音声ファイルに変換した文字列は、以下のディレトリに保存され蓄積し、次からは変換処理が省略されます。
+一度音声ファイルに変換した文字列は、以下のディレトリに蓄積し、次からは変換処理が省略されます。
 
 ${HOME}/tmp/Speak_wav/
 
@@ -42,7 +42,7 @@ $ Speak.py [str]...
 # import this class library
 from Speak import Speak
 
-# オブジェクトの作成
+# まずは、Speakオブジェクトを作成
 s = Speak()
 
 # Example 1
@@ -58,7 +58,12 @@ s.speak(word_list)
 
 
 ```bash
+# サーバー起動
 $ SpeakServer.py &
+
+# Example 1
 $ speak2.sh こんにちは
+
+# Example 2 (telnetコマンド使用)
 $ echo こんにちは | telnet localhost 12349
 ```
