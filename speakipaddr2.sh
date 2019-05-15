@@ -18,6 +18,7 @@ SPEAK_TELNET="telnet localhost 12349"
 MSG0="IPアドレス 検出しました"
 MSG1="読み上げます"
 MSG2="繰り返します"
+MSG3="以上です"
 MSG_ERR="IPアドレスを検出できません"
 MSG_YES="はい"
 MSG_INTR="おしゃべりをやめます"
@@ -73,10 +74,12 @@ speak ${MSG1}
 speak ${IPSTR2}
 
 if [ X$1 = X ]; then
+    speak ${MSG3}
     exit_ 0
 fi
 
 speak ${MSG2}
 speak ${IPSTR2}
+speak ${MSG3}
 
 exit_ 0
