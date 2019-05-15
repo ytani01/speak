@@ -57,6 +57,7 @@ class SpeakClient:
         tn = telnetlib.Telnet(self.svr_host, self.svr_port)
         while True:
             in_data = tn.read_some()
+            decoded_data = ''
             self.logger.debug('in_data:%a', in_data)
             try:
                 decoded_data = in_data.decode('utf-8')
@@ -66,6 +67,7 @@ class SpeakClient:
                 self.logger.debug('decoded_data:\"%s\"', decoded_data)
 
             if REPLY_READY in decoded_data:
+                self.logger.info(decoded_data)
                 break
 
         return tn
@@ -117,9 +119,14 @@ class Sample:
         if self.message == '':
             tm = time.localtime()
             message = '%s月%s日 %s時%s分' % (tm.tm_mon, tm.tm_mday, tm.tm_hour, tm.tm_min)
+            self.logger.info(message)
             self.cl.speak(message)
         else:
             self.cl.speak(self.message)
+
+    def __del__(self):
+        self.logger.debug('')
+        self.end()
 
     def end(self):
         self.logger.debug('')
