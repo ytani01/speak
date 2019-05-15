@@ -9,7 +9,7 @@ GPIO_PIN="21"
 WAIT_BUTTON_CMD="wait_button.sh"
 
 #SPEAK_CMD="speak.py"
-SPEAK_CMD="Speak.py"
+#SPEAK_CMD="Speak.py"
 #SPEAK_CMD="SpeakClient.py"
 
 SPEAK_TELNET="telnet localhost 12349"
@@ -26,13 +26,16 @@ speak () {
     for s in $*; do
 	if [ -e ${STOP_FILE} ]; then
 	    echo "!"
-	    ${SPEAK_CMD} ${MSG_YES}
+	    #${SPEAK_CMD} ${MSG_YES}
+	    echo ${MSG_YES} | ${SPEAK_TELNET}
 	    rm -f ${STOP_FILE}
-	    ${SPEAK_CMD} ${MSG_INTR}
+	    #${SPEAK_CMD} ${MSG_INTR}
+	    echo ${MSG_INTR} | ${SPEAK_TELNET}
 	    exit 0
 	fi
 	s2=`echo $s | sed 's/\([0-9]\)/\1 /g'`
-	${SPEAK_CMD} "$s2"
+	#${SPEAK_CMD} "$s2"
+	echo $s2 | ${SPEAK_TELNET}
     done
 }
 

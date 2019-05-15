@@ -1,8 +1,8 @@
 # speak
-speak command and library for Python3
+speak command and library and server for Python3
 
 ## Description
-OpenJTalkを利用し、指定した文字列をしゃべるコマンドおよびPython3ライブラリ(クラス)。
+OpenJTalkを利用し、指定した文字列をしゃべるコマンドおよびPython3ライブラリ(クラス)、およびサーバー
 
 ## Open JTalkのインストール
 
@@ -31,4 +31,11 @@ speak.speak('こんにちは')
 # Example 2
 str = 'こんにちは'
 speak.speak(str)
+```
+
+## SpeakServer.py
+
+```bash
+$ SpeakServer.py &
+$ echo こんにちは | telnet localhost 12349
 ```
