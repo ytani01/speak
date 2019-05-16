@@ -1,0 +1,68 @@
+#!/bin/sh
+
+BINDIR=${HOME}/bin
+LOGDIR=${HOME}/tmp
+
+PATH=${BINDIR}:${PATH}
+
+MY_NAME="オットパイ"
+
+SPEAK=OFF
+SPEAK_SERVER="SpeakServer.py"
+SPEAK_LOG="${LOGDIR}/speak.log"
+
+#SPEAK_CMD="Speak.py"
+#SPEAK_CMD="speak"
+#SPEAK_CMD="SpeakClient.py"
+SPEAK_CMD="speak2.sh"
+
+SPEAKIPADDR_CMD="speakipaddr2.sh"
+
+ROBOT_SERVER="${HOME}/OttoPi/OttoPiServer.py"
+#ROBOT_OPT=""
+ROBOT_OPT="-d"
+ROBOT_LOG="${LOGDIR}/robot.log"
+
+HTTP_SERVER="${HOME}/OttoPi/OttoPiHttpServer.py"
+#HTTP_OPT=""
+HTTP_OPT="-d"
+HTTP_LOG="${LOGDIR}/http.log"
+
+
+if which ${SPEAK_SERVER}; then
+    SPEAK=ON
+    ${SPEAK_SERVER} -d > ${SPEAK_LOG} 2>&1 &
+    sleep 5
+    ${SPEAK_CMD} "私は${MY_NAME}です"
+fi
+
+if [ -x ${ROBOT_SERVER} ]; then
+    if [ ${SPEAK} = ON ]; then
+	${SPEAK_CMD} "ロボットサーバーを起動します" &
+    fi
+    if [ -f ${ROBOT_LOG} ]; then
+	mv ${ROBOT_LOG} ${ROBOT_LOG}.1
+    fi
+    ${ROBOT_SERVER} ${ROBOT_OPT} > ${ROBOT_LOG} 2>&1 &
+    sleep 9
+fi
+
+if [ -x ${HTTP_SERVER} ]; then
+    if [ ${SPEAK} = ON ]; then
+	${SPEAK_CMD} "HTTPサーバーを起動します" &
+    fi
+    if [ -f ${HTTP_LOG} ]; then
+	mv ${HTTP_LOG} ${HTTP_LOG}.1
+    fi
+    ${HTTP_SERVER} ${HTTP_OPT} > ${HTTP_LOG} 2>&1 &
+    sleep 9
+fi
+
+if [ ${SPEAK} = ON ]; then
+    if which ${SPEAKIPADDR_CMD}; then
+	${SPEAKIPADDR_CMD} repeat &
+    fi
+fi
+
+sleep 10
+(sleep 1; echo h; sleep 3) | telnet localhost 12345
