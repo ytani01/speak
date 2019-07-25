@@ -4,6 +4,6 @@
 #
 
 PKGS="open-jtalk open-jtalk-mecab-naist-jdic hts-voice-nitech-jp-atr503-m001 
-expect"
+expect telnet"
 
 sudo apt install -y ${PKGS}

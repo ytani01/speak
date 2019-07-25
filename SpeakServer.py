@@ -110,7 +110,7 @@ class SpeakHandler(socketserver.StreamRequestHandler):
         # 0xff IAC
         # 0xfd D0
         # 0x22 LINEMODE
-        self.net_write(b'\xff\xfd\x22')
+        #self.net_write(b'\xff\xfd\x22')
         self.net_write('#Ready\r\n'.encode('utf-8'))
 
         flag_continue = True
