@@ -10,8 +10,8 @@ WAIT_BUTTON_CMD="wait_button.sh"
 
 #SPEAK_CMD="speak.py"
 #SPEAK_CMD="Speak.py"
-#SPEAK_CMD="SpeakClient.py"
-SPEAK_CMD="speak2.sh"
+SPEAK_CMD="SpeakClient.py"
+#SPEAK_CMD="speak2.sh"
 
 SPEAK_TELNET="telnet localhost 12349"
 
