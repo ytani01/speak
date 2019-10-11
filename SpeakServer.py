@@ -40,7 +40,7 @@ class SpeakWorker(threading.Thread):
         self.logger.debug('')
 
         self.msgq = queue.Queue()
-        self.speak = Speak()
+        self.speak = Speak(debug=self.debug)
         self.running = False
 
         super().__init__(daemon=True)
@@ -78,7 +78,9 @@ class SpeakWorker(threading.Thread):
             if msg == '':
                 continue
             word = msg.split()
+            self.logger.debug('word=%s', word)
             self.speak.speak(word)
+                 
         self.logger.debug('done')
 
 #####

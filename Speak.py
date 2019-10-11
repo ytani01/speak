@@ -51,6 +51,15 @@ class Speak:
 
         os.makedirs(WAV_DIR, exist_ok=True)
 
+    def isfloat(self, s1):
+        self.logger.debug('str=%s', s1)
+
+        try:
+            float(s1)
+            return True
+        except ValueError:
+            return False
+
     def speak(self, word):
         self.logger.debug('word=%s', word)
 
@@ -60,6 +69,9 @@ class Speak:
         elif type(word) == int:
             self.logger.debug('word is integer')
             self.speak1(str(word))
+        elif word[0] == 'sleep' and self.isfloat(word[1]):
+            self.logger.debug('Sleep %.1f sec.', float(word[1]))
+            time.sleep(float(word[1]))
         else:
             for w in word:
                 self.speak1(str(w))
