@@ -15,7 +15,7 @@ SPEAK_CMD="SpeakClient.py"
 
 SPEAK_TELNET="telnet localhost 12349"
 
-MSG0="IPアドレス 検出しました"
+MSG0="IPアドレスを検出しました"
 MSG1="読み上げます"
 MSG2="繰り返します"
 MSG3="以上です"
