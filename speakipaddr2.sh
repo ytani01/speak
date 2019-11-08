@@ -1,11 +1,16 @@
 #!/bin/sh
 # (c) 2018 Yoichi Tanibayashi
+#
+MYNAME=`basename $0`
 
 PATH="/home/pi/bin:${PATH}:."
 
 STOP_FILE=${HOME}/BUTTON_INPUT
+
 #GPIO_PIN="13 17"
-GPIO_PIN="21"
+GPIO_PIN=$1
+shift
+
 WAIT_BUTTON_CMD="wait_button.sh"
 
 #SPEAK_CMD="speak.py"
@@ -50,7 +55,10 @@ exit_ () {
 }
 
 ##### main
-${WAIT_BUTTON_CMD} ${STOP_FILE} ${GPIO_PIN} &
+
+if [ X${GPIO_PIN} != X ]; then
+    ${WAIT_BUTTON_CMD} ${STOP_FILE} ${GPIO_PIN} &
+fi
 
 IPSTR=`hostname -I | grep '^[0-9]*\.[0-9]' | sed 's/ .*//'`
 echo ${IPSTR}
