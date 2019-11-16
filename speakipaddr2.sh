@@ -23,10 +23,10 @@ SPEAK_TELNET="telnet localhost 12349"
 MSG0="IPアドレスを検出しました"
 MSG1="読み上げます"
 MSG2="繰り返します"
-MSG3="以上です"
+MSG3="IPアドレスは以上です"
 MSG_ERR="IPアドレスを検出できません"
 MSG_YES="はい"
-MSG_INTR="おしゃべりをやめます"
+MSG_INTR="読上げをやめます"
 
 #####
 speak () {
