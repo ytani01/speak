@@ -50,5 +50,5 @@ sudo apt install -y ${PKGS}
 echo "* make symbolic links in ${BINDIR}"
 cd ${BINDIR}
 for f in ${CMDS}; do
-	ln -sfv ${TOPDIR}/$f .
+    ln -sfv ${BASEDIR}/$f .
 done
