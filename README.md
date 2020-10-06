@@ -11,17 +11,14 @@ ${HOME}/tmp/Speak_wav/
 
 ## 2. Install
 
-### 2.1 Open JTalkのインストール
-
 ```bash
-$ sudo apt install -y open-jtalk open-jtalk-mecab-naist-jdic hts-voice-nitech-jp-atr503-m001
-```
-
-### 2.2 その他のインストール
-
-for speak2.sh install 'expect' command as follows
-```bash
-$ sudo apt install -y expect
+$ cd ~
+~ $ python3 -m venv env1
+~ $ cd ~/env1
+~/env1 $ . ./bin/activate
+(env1)~/env1 $ git clone https://www.github.com/ytani01/speak.git
+(env1)~/env1 $ cd speak
+(env1)~/env1/speak $ ./setup.sh
 ```
 
 ## 3. Usage
