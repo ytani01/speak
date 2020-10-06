@@ -18,32 +18,31 @@ handler_fmt = Formatter(
 console_handler.setFormatter(handler_fmt)
 logger.addHandler(console_handler)
 logger.propagate = False
-def get_logger(name, debug):
-    l = logger.getChild(name)
-    if debug:
-        l.setLevel(DEBUG)
-    else:
-        l.setLevel(INFO)
-    return l
 
-#####
+
+def get_logger(name, debug):
+    _log = logger.getChild(name)
+    if debug:
+        _log.setLevel(DEBUG)
+    else:
+        _log.setLevel(INFO)
+    return _log
+
+
 HOME_DIR       = os.environ['HOME']
 TMP_DIR        = HOME_DIR + '/tmp'
 WAV_DIR        = TMP_DIR + '/Speak_wav'
-
 OPEN_JTALK_CMD = 'open_jtalk'
 DIC_DIR        = '/var/lib/mecab/dic/open-jtalk/naist-jdic'
 VOICE_FILE     = HOME_DIR + '/speak/Voice/mei/mei_normal.htsvoice'
 SPEAD          = '1.0'
-
 OPEN_JTALK_CMDLINE = [OPEN_JTALK_CMD,
                       '-x', DIC_DIR,
                       '-r', SPEAD,
                       '-m', VOICE_FILE, '-ow']
-
 PLAY_CMD       = 'aplay'
 
-#####
+
 class Speak:
     def __init__(self, debug=False):
         self.debug = debug
@@ -106,7 +105,7 @@ class Speak:
         ret.stdin.write(word.encode('utf-8'))
         ret.stdin.close()
         ret.wait()
-        
+
     def play_wav(self, word):
         self.logger.debug('word=%s', word)
 
@@ -115,7 +114,7 @@ class Speak:
         if not os.path.isfile(wav_file):
             self.logger.debug('%s: no such file', wav_file)
             return
-        
+
         cmdline = [PLAY_CMD, wav_file]
         self.logger.debug('cmdline=%s', cmdline)
 
@@ -125,15 +124,15 @@ class Speak:
 
     def end(self):
         self.logger.debug('')
-        
-#####
+
+
 class Sample:
     def __init__(self, word, debug=False):
         self.debug = debug
         self.logger = get_logger(__class__.__name__, debug)
-        self.logger.debug('word=%s',word)
+        self.logger.debug('word=%s', word)
 
-        self.word =word
+        self.word = word
         self.spk = Speak(debug=debug)
 
     def main(self):
@@ -143,16 +142,19 @@ class Sample:
             self.spk.speak(self.word)
         else:
             tm = time.localtime()
-            word = '%s月%s日 %s時%s分' % (tm.tm_mon, tm.tm_mday, tm.tm_hour, tm.tm_min)
+            word = '%s月%s日 %s時%s分' % (
+                tm.tm_mon, tm.tm_mday, tm.tm_hour, tm.tm_min)
             self.logger.debug('word=%s', word)
             self.spk.speak(word)
 
     def end(self):
         self.logger.debug('')
         self.spk.end()
-        
-#####
+
+
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
+
+
 @click.command(context_settings=CONTEXT_SETTINGS)
 @click.argument('word', type=str, nargs=-1)
 @click.option('--debug', '-d', 'debug', is_flag=True, default=False,
@@ -167,6 +169,7 @@ def main(word, debug):
     finally:
         logger.debug('finally')
         obj.end()
+
 
 if __name__ == '__main__':
     main()
