@@ -45,6 +45,13 @@ echo "* install packages"
 sudo apt install -y ${PKGS}
 
 #
+# copy Voice files
+#
+echo "* copy Voice files"
+mkdir -pv $HOME/speak
+cp -rv $BASEDIR/Voice $HOME/speak
+
+#
 # make symbolic links
 #
 echo "* make symbolic links in ${BINDIR}"
